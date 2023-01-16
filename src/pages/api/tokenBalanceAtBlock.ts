@@ -1,4 +1,11 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};
+
+// http://localhost:3000/api/tokenBalanceAtBlock?contractAddress=0xb24cd494fae4c180a89975f1328eab2a7d5d8f11&wallet=0x75A6085Bbc25665B6891EA94475E6120897BA90b&blockNumber=123123
+
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { ethers } from "ethers";
@@ -67,8 +74,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       .with("GET", async () => {
         try {
           const balance = await ERC20.balanceOf(wallet);
-
-          res.status(200).json({ balance: balance.toString() });
+          return res.status(200).json({ balance: balance.toString() });
         } catch (error) {
           res.status(500).json({ error });
         }
