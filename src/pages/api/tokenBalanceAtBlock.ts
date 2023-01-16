@@ -9,7 +9,7 @@ export const config = {
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { ethers } from "ethers";
-import { match, P } from "ts-pattern";
+import { match } from "ts-pattern";
 import { z } from "zod";
 
 const provider = new ethers.providers.AlchemyProvider("homestead", process.env.ALCHEMY_API_KEY);
@@ -17,7 +17,7 @@ const provider = new ethers.providers.AlchemyProvider("homestead", process.env.A
 const reqInfo = z.object({
   wallet: z.string().length(42).startsWith("0x"),
   contractAddress: z.string().length(42).startsWith("0x"),
-  blockNumber: z.coerce.number(),
+  blockNumber: z.coerce.number().optional(),
 });
 
 const ERC20ABI = [
@@ -74,6 +74,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       .with("GET", async () => {
         try {
           const balance = await ERC20.balanceOf(wallet);
+          ERC20
           return res.status(200).json({ balance: balance.toString() });
         } catch (error) {
           res.status(500).json({ error });
