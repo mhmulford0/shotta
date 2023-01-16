@@ -74,7 +74,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       .with("GET", async () => {
         try {
           const balance = await ERC20.balanceOf(wallet);
-          ERC20
           return res.status(200).json({ balance: balance.toString() });
         } catch (error) {
           res.status(500).json({ error });
