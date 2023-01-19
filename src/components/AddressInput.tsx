@@ -1,6 +1,4 @@
-import { useReducer } from "react";
-import { match } from "ts-pattern";
-
+import { useState } from "react";
 type ApiResponse = {
   balance: string;
 };
@@ -8,13 +6,6 @@ type ApiResponse = {
 const initialState = {
   wallet: "",
   contractAddress: "",
-};
-type Actions = {
-  type: "updateInput";
-  payload: {
-    name: string;
-    value: string;
-  };
 };
 
 async function checkTokenBalance(state: typeof initialState) {
@@ -28,26 +19,9 @@ async function checkTokenBalance(state: typeof initialState) {
   console.log(data);
 }
 
-function reducer(state: typeof initialState, action: Actions) {
-  // console.log(action.payload);
-  return match(action.type)
-    .with("updateInput", () => {
-      return {
-        ...state,
-        [action.payload.name]: action.payload.value,
-      };
-    })
-    .otherwise(() => {
-      return {
-        wallet: "",
-        contractAddress: "",
-      };
-    });
-}
-
 export default function AddressInput() {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  console.log(state);
+  const [formData, setFormData] = useState(initialState);
+  console.log(formData);
   return (
     <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -70,12 +44,7 @@ export default function AddressInput() {
                 autoComplete="wallet"
                 required
                 className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                onChange={(e) =>
-                  dispatch({
-                    type: "updateInput",
-                    payload: { name: e.target.name, value: e.target.value },
-                  })
-                }
+                onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
               />
             </div>
           </div>
@@ -92,12 +61,7 @@ export default function AddressInput() {
                 autoComplete="contractAddress"
                 required
                 className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                onChange={(e) =>
-                  dispatch({
-                    type: "updateInput",
-                    payload: { name: e.target.name, value: e.target.value },
-                  })
-                }
+                onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
               />
             </div>
           </div>
@@ -106,7 +70,7 @@ export default function AddressInput() {
             <button
               type="submit"
               className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mt-2"
-              onClick={() => checkTokenBalance(state)}
+              onClick={() => checkTokenBalance(formData)}
             >
               Search
             </button>
