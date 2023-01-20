@@ -30,7 +30,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       .with("GET", async () => {
         try {
           const balance = await ERC20.balanceOf(wallet);
-          return res.status(200).json({ balance: balance.toString() });
+          const decimals: number = await ERC20.decimals();
+          const name: string = await ERC20.name();
+          const symbol: string = await ERC20.symbol();
+          const formattedBalance = ethers.utils.formatUnits(balance, decimals);
+
+          return res.status(200).json({ balance: formattedBalance, decimals, name, symbol });
         } catch (error) {
           res.status(500).json({ error });
         }
