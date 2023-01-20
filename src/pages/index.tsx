@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import AddressInput from "@/components/AddressInput";
+import ERC20TokenBalance from "@/components/ERC20TokenBalance";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,7 @@ export default function Home() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <AddressInput />
+        <ERC20TokenBalance />
       </div>
     </>
   );
