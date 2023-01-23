@@ -1,4 +1,5 @@
 import ConnectWalletButton from "@/components/layout/ConnectWalletButton";
+import Navbar from "./Navbar";
 
 type Props = {
   children?: React.ReactNode;
@@ -6,11 +7,9 @@ type Props = {
 
 export default function Layout({ children }: Props) {
   return (
-    <div className="border">
-      <div className="
-       max-w-lg border">
-        <ConnectWalletButton />
-      </div>
+    <div>
+
+      <Navbar />
       {children}
     </div>
   );

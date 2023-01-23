@@ -36,10 +36,10 @@ export default function AddressInput({ setApiData }: Props) {
   }
 
   return (
-    <>
+    <div className="mb-4 my-auto">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-100">
-          Get Token Balance
+          Get ERC 20 Token Balance
         </h2>
       </div>
 
@@ -74,6 +74,7 @@ export default function AddressInput({ setApiData }: Props) {
                 type="contractAddress"
                 autoComplete="contractAddress"
                 required
+                value={formData.contractAddress}
                 className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
               />
@@ -91,6 +92,6 @@ export default function AddressInput({ setApiData }: Props) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
