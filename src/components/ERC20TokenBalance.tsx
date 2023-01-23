@@ -1,4 +1,7 @@
-export default function ERC20TokenBalance() {
+import { ApiResponse } from "@/pages";
+
+export default function ERC20TokenBalance(props: { apiData: ApiResponse }) {
+  const { name, symbol, balance } = props.apiData;
   return (
     <div className="sm:mx-auto sm:w-full sm:max-w-md">
       <div className="overflow-hidden bg-white shadow sm:rounded-lg">
@@ -9,18 +12,18 @@ export default function ERC20TokenBalance() {
           <dl className="sm:divide-y sm:divide-gray-200">
             <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Name</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">Margot Foster</dd>
+              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{name}</dd>
             </div>
             <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Symbol</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                Backend Developer
+                {symbol}
               </dd>
             </div>
             <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">Balance</dt>
               <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                margotfoster@example.com
+                {parseFloat(balance).toFixed(4)}
               </dd>
             </div>
           </dl>

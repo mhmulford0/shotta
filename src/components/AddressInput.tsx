@@ -1,28 +1,33 @@
-import { useState } from "react";
-type ApiResponse = {
-  balance: string;
-  decimals: number;
+import { ApiResponse } from "@/pages";
+import { Dispatch, SetStateAction, useState } from "react";
+
+type ApiRequest = {
+  wallet: string;
+  contractAddress: string;
 };
 
-const initialState = {
-  wallet: "",
-  contractAddress: "",
+type Props = {
+  setApiData: Dispatch<SetStateAction<ApiResponse>>;
 };
 
-async function checkTokenBalance(state: typeof initialState) {
-  const res = await fetch(
-    `/api/tokenBalanceAtBlock?${new URLSearchParams({
-      ...state,
-    })}`
-  );
-  const data: ApiResponse = await res.json();
+export default function AddressInput({ setApiData }: Props) {
+  const [formData, setFormData] = useState<ApiRequest>({
+    wallet: "",
+    contractAddress: "",
+  });
 
-  console.log(data);
-}
+  async function checkTokenBalance(wallet: string, contractAddress: string) {
+    const res = await fetch(
+      `/api/tokenBalanceAtBlock?${new URLSearchParams({
+        wallet: wallet,
+        contractAddress: contractAddress,
+      })}`
+    );
+    const data: ApiResponse = await res.json();
+  
+    setApiData(data)
+  }
 
-export default function AddressInput() {
-  const [formData, setFormData] = useState(initialState);
-  console.log(formData);
   return (
     <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -71,7 +76,7 @@ export default function AddressInput() {
             <button
               type="submit"
               className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mt-2"
-              onClick={() => checkTokenBalance(formData)}
+              onClick={() => checkTokenBalance(formData.wallet, formData.contractAddress)}
             >
               Search
             </button>

@@ -3,11 +3,25 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import AddressInput from "@/components/AddressInput";
-import ERC20TokenBalance from "@/components/ERC20TokenBalance";
+import ERC20TokenBalance from "@/components/ERC20TokenBalance";import { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export type ApiResponse = {
+  balance: string;
+  decimals: string;
+  name: string;
+  symbol: string;
+};
+
 export default function Home() {
+  const [apiData, setApiData] = useState<ApiResponse>({
+    balance: "",
+    decimals: "",
+    name: "",
+    symbol: "",
+  });
+
   return (
     <>
       <Head>
@@ -18,8 +32,8 @@ export default function Home() {
       </Head>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <AddressInput />
-        <ERC20TokenBalance />
+        <AddressInput setApiData={setApiData} />
+        {apiData.balance ? <ERC20TokenBalance apiData={apiData}/> : ""}
       </div>
     </>
   );
