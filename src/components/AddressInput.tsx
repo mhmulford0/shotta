@@ -1,3 +1,4 @@
+import { classNames } from "@/core/classNames";
 import type { ApiRequest, ApiResponse } from "@/types";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useAccount } from "wagmi";
@@ -10,6 +11,7 @@ export default function AddressInput({ setApiData }: Props) {
   const { address } = useAccount();
   const [formData, setFormData] = useState<ApiRequest>({
     contractAddress: "",
+    wallet: ""
   });
   const [formError, setFormError] = useState({
     error: "",
@@ -28,8 +30,10 @@ export default function AddressInput({ setApiData }: Props) {
     );
     const data: ApiResponse = await res.json();
 
-    setApiData(data);
+    setApiData({ ...data, wallet: address });
   }
+
+  const isBtnDisabled = !address || formData.contractAddress.length !== 42;
 
   if (!address) {
     return <h1>Please connect Wallet</h1>;
@@ -53,9 +57,9 @@ export default function AddressInput({ setApiData }: Props) {
               <input
                 id="wallet"
                 name="wallet"
-                type="wallet"
+                type="text"
                 autoComplete="wallet"
-                value={address || ""}
+                value={formData.wallet || address}
                 required
                 className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
@@ -71,11 +75,11 @@ export default function AddressInput({ setApiData }: Props) {
               <input
                 id="contractAddress"
                 name="contractAddress"
-                type="contractAddress"
+                type="text"
                 autoComplete="contractAddress"
                 required
                 value={formData.contractAddress}
-                className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm"
                 onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
               />
             </div>
@@ -84,7 +88,13 @@ export default function AddressInput({ setApiData }: Props) {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mt-2"
+              className={classNames(
+                isBtnDisabled
+                  ? "bg-indigo-400 cursor-not-allowed"
+                  : "bg-indigo-600 hover:bg-indigo-700",
+                "flex w-full justify-center rounded-md border border-transparent py-2 px-4 mt-2 text-sm font-medium text-white shadow-sm"
+              )}
+              disabled={isBtnDisabled}
               onClick={() => checkTokenBalance(formData.contractAddress)}
             >
               Search

@@ -3,18 +3,18 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import ConnectWalletButton from "./ConnectWalletButton";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { classNames } from "@/core/classNames";
 
 const navigation = [
   { name: "Home", href: "/" },
   { name: "ERC 20 Balance", href: "/erc20", current: true },
 ];
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+
 
 export default function Navbar() {
   const router = useRouter();
+
   return (
     <Disclosure as="nav" className="bg-gray-900">
       {({ open }) => (

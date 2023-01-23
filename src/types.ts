@@ -1,5 +1,6 @@
 export type ApiRequest = {
   contractAddress: string;
+  wallet: string;
 };
 
 export type ApiResponse = {
@@ -7,4 +8,5 @@ export type ApiResponse = {
   decimals: string;
   name: string;
   symbol: string;
+  wallet: string
 };

@@ -16,6 +16,7 @@ export default function ERC20BalancePage() {
     decimals: "",
     name: "",
     symbol: "",
+    wallet: ""
   });
   return (
     <>
