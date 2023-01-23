@@ -1,19 +1,20 @@
-import { useRouter } from 'next/router'
-import { Disclosure } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import ConnectWalletButton from './ConnectWalletButton'
-import Link from 'next/link'
+import { Disclosure } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import ConnectWalletButton from "./ConnectWalletButton";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const navigation = [
-  { name: 'ERC 20 Balance', href: '/erc20', current: true },
-]
+  { name: "Home", href: "/" },
+  { name: "ERC 20 Balance", href: "/erc20", current: true },
+];
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
-  const router = useRouter()
+export default function Navbar() {
+  const router = useRouter();
   return (
     <Disclosure as="nav" className="bg-gray-900">
       {({ open }) => (
@@ -51,10 +52,12 @@ export default function Example() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'px-3 py-2 rounded-md text-sm font-medium'
+                          router.pathname === item.href
+                            ? "bg-gray-900 text-white"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "px-3 py-2 rounded-md text-sm font-medium"
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
                       </Link>
@@ -64,8 +67,6 @@ export default function Example() {
               </div>
               <div className="absolute inset-y-0 right-0 sm:flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 hidden">
                 <ConnectWalletButton />
-               
-                 
               </div>
             </div>
           </div>
@@ -78,19 +79,21 @@ export default function Example() {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block px-3 py-2 rounded-md text-base font-medium'
+                    item.current
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block px-3 py-2 rounded-md text-base font-medium"
                   )}
-                  aria-current={item.current ? 'page' : undefined}
+                  aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
               ))}
-               <ConnectWalletButton />
+              <ConnectWalletButton />
             </div>
           </Disclosure.Panel>
         </>
       )}
     </Disclosure>
-  )
+  );
 }
