@@ -1,27 +1,9 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import AddressInput from "@/components/AddressInput";
-import ERC20TokenBalance from "@/components/ERC20TokenBalance";import { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export type ApiResponse = {
-  balance: string;
-  decimals: string;
-  name: string;
-  symbol: string;
-};
-
 export default function Home() {
-  const [apiData, setApiData] = useState<ApiResponse>({
-    balance: "",
-    decimals: "",
-    name: "",
-    symbol: "",
-  });
-
   return (
     <>
       <Head>
@@ -30,11 +12,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <AddressInput setApiData={setApiData} />
-        {apiData.balance ? <ERC20TokenBalance apiData={apiData}/> : ""}
-      </div>
+      welcome to the info app
     </>
   );
 }
