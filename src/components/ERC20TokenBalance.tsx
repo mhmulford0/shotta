@@ -1,4 +1,5 @@
-import { ApiResponse } from "@/pages";
+import type { ApiResponse } from "@/types";
+
 
 export default function ERC20TokenBalance(props: { apiData: ApiResponse }) {
   const { name, symbol, balance } = props.apiData;
