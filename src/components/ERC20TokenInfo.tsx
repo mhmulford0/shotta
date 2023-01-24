@@ -1,7 +1,7 @@
 import type { ApiResponse } from "@/types";
 import { useAccount } from "wagmi";
 
-export default function ERC20TokenBalance(props: { apiData: ApiResponse }) {
+export default function ERC20TokenInfo(props: { apiData: ApiResponse }) {
   const { address } = useAccount();
   const { name, symbol, balance, wallet } = props.apiData;
   return (

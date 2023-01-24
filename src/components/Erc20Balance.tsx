@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 const AddressInput = dynamic(() => import("@/components/AddressInput"), {
   ssr: false,
 });
-import ERC20TokenBalance from "./ERC20TokenBalance";
+import ERC20TokenBalance from "./ERC20TokenInfo";
 
 export default function Erc20Balance() {
   const { apiData, checkTokenBalance } = useErc20TokenBalance();

@@ -5,10 +5,10 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { useAccount } from "wagmi";
 
 type Props = {
-  checkTokenBalance: (contractAddress: string) => Promise<void>
-}
+  checkTokenBalance: (contractAddress: string) => Promise<void>;
+};
 
-export default function AddressInput({checkTokenBalance}: Props) {
+export default function AddressInput({ checkTokenBalance }: Props) {
   const { address } = useAccount();
   const [formData, setFormData] = useState<ApiRequest>({
     contractAddress: "",
@@ -45,11 +45,18 @@ export default function AddressInput({checkTokenBalance}: Props) {
                 name="wallet"
                 type="text"
                 autoComplete="wallet"
-                value={formData.wallet || address}
+                value={formData.wallet}
                 required
                 className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
               />
+            </div>
+
+            <div
+              className="inline ml-[0.5ch] text-gray-500 italic font-bold text-sm hover:underline cursor-pointer"
+              onClick={() => setFormData({ ...formData, wallet: address })}
+            >
+              Use My Address
             </div>
           </div>
 
