@@ -3,7 +3,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import ConnectWalletButton from "./ConnectWalletButton";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { classNames } from "@/core/classNames";
+import { classNames } from "@/core/client/classNames";
 
 const navigation = [
   { name: "Home", href: "/" },

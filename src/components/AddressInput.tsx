@@ -1,37 +1,23 @@
-import { classNames } from "@/core/classNames";
+import { classNames } from "@/core/client/classNames";
+import useErc20TokenBalance from "@/core/client/hooks/useErc20TokenBalance";
 import type { ApiRequest, ApiResponse } from "@/types";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useAccount } from "wagmi";
 
 type Props = {
-  setApiData: Dispatch<SetStateAction<ApiResponse>>;
-};
+  checkTokenBalance: (contractAddress: string) => Promise<void>
+}
 
-export default function AddressInput({ setApiData }: Props) {
+export default function AddressInput({checkTokenBalance}: Props) {
   const { address } = useAccount();
   const [formData, setFormData] = useState<ApiRequest>({
     contractAddress: "",
-    wallet: ""
+    wallet: "",
   });
   const [formError, setFormError] = useState({
     error: "",
     message: "",
   });
-
-  async function checkTokenBalance(contractAddress: string) {
-    if (!address || !formData.contractAddress) {
-      throw Error("IMPLEMENT ERROR HANDLING");
-    }
-    const res = await fetch(
-      `/api/tokenBalanceAtBlock?${new URLSearchParams({
-        wallet: address,
-        contractAddress: contractAddress,
-      })}`
-    );
-    const data: ApiResponse = await res.json();
-
-    setApiData({ ...data, wallet: address });
-  }
 
   const isBtnDisabled = !address || formData.contractAddress.length !== 42;
 
