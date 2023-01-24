@@ -1,7 +1,6 @@
 import { classNames } from "@/core/client/classNames";
-import useErc20TokenBalance from "@/core/client/hooks/useErc20TokenBalance";
-import type { ApiRequest, ApiResponse } from "@/types";
-import { Dispatch, SetStateAction, useState } from "react";
+import type { ApiRequest } from "@/types";
+import { useState } from "react";
 import { useAccount } from "wagmi";
 
 type Props = {
